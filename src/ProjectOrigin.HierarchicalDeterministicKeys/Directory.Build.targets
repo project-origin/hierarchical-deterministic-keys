@@ -7,13 +7,13 @@
     <Description>This client library has a interface and currently a single implementation of HD keys.</Description>
     <Summary>Library for Hierarchical Deterministic Keys for use with Project-Origin</Summary>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageReadmeFile>../../README.md</PackageReadmeFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>packageIcon.png</PackageIcon>
     <RepositoryUrl>https://github.com/project-origin/registry.git</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="../../README.md" Pack="true" PackagePath="\" />
     <None Include="../packageIcon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
