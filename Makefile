@@ -89,5 +89,5 @@ nuget-pack: build
   ifndef output_path
 	dotnet pack --configuration $(configuration) --no-build -p:Version=$(version) $(src_path)
   else
-	dotnet pack --configuration $(configuration) --no-build -p:Version=$(version) $(src_path) --output $(output_path)
+	dotnet pack --configuration $(configuration) --no-build --output $(output_path) -p:Version=$(version) $(src_path)
   endif
