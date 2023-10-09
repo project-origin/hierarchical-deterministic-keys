@@ -3,6 +3,8 @@ using System.Text;
 using NSec.Cryptography;
 using ProjectOrigin.HierarchicalDeterministicKeys.Interfaces;
 
+namespace ProjectOrigin.HierarchicalDeterministicKeys.Implementations;
+
 public class Ed25519Algorithm : IPublicKeyAlgorithm
 {
     private static readonly SignatureAlgorithm algorithm = SignatureAlgorithm.Ed25519;
@@ -41,7 +43,7 @@ public class Ed25519Algorithm : IPublicKeyAlgorithm
 
     public class Ed25519PrivateKey : IPrivateKey
     {
-        private Key _key;
+        private readonly Key _key;
 
         public Ed25519PrivateKey(Key key)
         {
@@ -68,7 +70,7 @@ public class Ed25519Algorithm : IPublicKeyAlgorithm
 
     public class Ed25519PublicKey : IPublicKey
     {
-        private PublicKey _key;
+        private readonly PublicKey _key;
 
         public Ed25519PublicKey(PublicKey key)
         {

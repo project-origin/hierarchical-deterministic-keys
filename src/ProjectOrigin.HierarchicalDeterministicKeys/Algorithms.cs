@@ -1,3 +1,5 @@
+using System;
+using ProjectOrigin.HierarchicalDeterministicKeys.Implementations;
 using ProjectOrigin.HierarchicalDeterministicKeys.Interfaces;
 
 namespace ProjectOrigin.HierarchicalDeterministicKeys;
@@ -11,6 +13,9 @@ namespace ProjectOrigin.HierarchicalDeterministicKeys;
 /// </remarks>
 public static class Algorithms
 {
-    public static IPublicKeyAlgorithm Ed25519 => IPublicKeyAlgorithm.Ed25519;
-    public static IHDAlgorithm Secp256k1 => IHDAlgorithm.Secp256k1;
+    private static Lazy<IHDAlgorithm> secp256k1 = new Lazy<IHDAlgorithm>(() => new Secp256k1Algorithm());
+    private static Lazy<IPublicKeyAlgorithm> ed25519 = new Lazy<IPublicKeyAlgorithm>(() => new Ed25519Algorithm());
+
+    public static IPublicKeyAlgorithm Ed25519 => ed25519.Value;
+    public static IHDAlgorithm Secp256k1 => secp256k1.Value;
 }

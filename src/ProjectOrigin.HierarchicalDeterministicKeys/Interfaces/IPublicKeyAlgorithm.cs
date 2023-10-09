@@ -1,5 +1,4 @@
 using System;
-using ProjectOrigin.HierarchicalDeterministicKeys.Implementations;
 
 namespace ProjectOrigin.HierarchicalDeterministicKeys.Interfaces;
 
@@ -12,9 +11,6 @@ namespace ProjectOrigin.HierarchicalDeterministicKeys.Interfaces;
 /// </remarks>
 public interface IPublicKeyAlgorithm
 {
-    private static Lazy<IPublicKeyAlgorithm> ed25519 = new Lazy<IPublicKeyAlgorithm>(() => new Ed25519Algorithm());
-    public static IPublicKeyAlgorithm Ed25519 => ed25519.Value;
-
     /// <summary>
     /// Generates a new private key.
     /// </summary>

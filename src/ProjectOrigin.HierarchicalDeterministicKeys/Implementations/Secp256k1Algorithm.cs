@@ -72,7 +72,7 @@ public class Secp256k1Algorithm : IHDAlgorithm
 
     internal class Secp256k1HDPublicKey : IHDPublicKey
     {
-        private ExtPubKey _extPubKey;
+        private readonly ExtPubKey _extPubKey;
 
         public Secp256k1HDPublicKey(ExtPubKey extPubKey)
         {
@@ -96,7 +96,7 @@ public class Secp256k1Algorithm : IHDAlgorithm
 
     internal class Secp256k1PublicKey : IPublicKey
     {
-        private PubKey _pubKey;
+        private readonly PubKey _pubKey;
 
         public Secp256k1PublicKey(PubKey pubKey)
         {
@@ -123,10 +123,7 @@ public class Secp256k1Algorithm : IHDAlgorithm
             return false;
         }
 
-        public override int GetHashCode()
-        {
-            return _pubKey.GetHashCode();
-        }
+        public override int GetHashCode() => _pubKey.GetHashCode();
 
         public string ExportPkixText()
         {

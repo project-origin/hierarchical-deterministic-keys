@@ -1,5 +1,4 @@
 using System;
-using ProjectOrigin.HierarchicalDeterministicKeys.Implementations;
 
 namespace ProjectOrigin.HierarchicalDeterministicKeys.Interfaces;
 
@@ -12,9 +11,6 @@ namespace ProjectOrigin.HierarchicalDeterministicKeys.Interfaces;
 /// </remarks>
 public interface IHDAlgorithm
 {
-    private static Lazy<IHDAlgorithm> secp256k1 = new Lazy<IHDAlgorithm>(() => new Secp256k1Algorithm());
-    public static IHDAlgorithm Secp256k1 => secp256k1.Value;
-
     /// <summary>
     /// Generates a new private key.
     /// </summary>
