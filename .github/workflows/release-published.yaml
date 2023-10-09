@@ -1,0 +1,39 @@
+name: Build release artifacts
+
+on:
+  release:
+    types: [published]
+
+env:
+  configuration: Release
+  path: src/ProjectOrigin.HierarchicalDeterministicKeys
+
+jobs:
+  publish-nuget-package:
+    name: Build and publish nuget package
+    runs-on: ubuntu-22.04
+    env:
+      nuget_path: nuget-packages
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET Core SDK from global.json
+        uses: actions/setup-dotnet@v3
+
+      - name: Get version from git-tag
+        id: output-version
+        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Package nuget package
+        shell: bash
+        run: make nuget-pack configuration=Release output_path=${{ env.nuget_path }} version=${{ steps.output-version.outputs.version }}
+
+      - name: Upload nuget artifact to GitHub
+        uses: actions/upload-artifact@v3
+        with:
+          retention-days: 1
+          path: ${{ env.nuget_path }}/*.nupkg
+
+      - name: Publish
+        shell: bash
+        run: dotnet nuget push ${{ env.nuget_path }}/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

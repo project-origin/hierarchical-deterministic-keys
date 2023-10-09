@@ -1,0 +1,39 @@
+name: Verifies PR are ready for merge
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  verify-code:
+    name: Verifies code formatting, builds, and runs unit tests
+    runs-on: ubuntu-22.04
+    env:
+      nuget_path: nuget-packages
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET Core SDK from global.json
+        uses: actions/setup-dotnet@v3
+
+      - name: Print info
+        run: make info
+
+      - name: Build code
+        run: make build
+
+      - name: Run tests
+        run: make test
+
+      - name: Verify formatting
+        run: make lint
+
+      - name: Make nuget packages
+        run: make nuget-pack version=0.0.1 output_path=${{ env.nuget_path }}
+
+      - name: Upload nuget artifact to GitHub
+        uses: actions/upload-artifact@v3
+        with:
+          retention-days: 1
+          path: ${{ env.nuget_path }}/*.nupkg
