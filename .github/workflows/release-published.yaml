@@ -20,13 +20,9 @@ jobs:
       - name: Setup .NET Core SDK from global.json
         uses: actions/setup-dotnet@v3
 
-      - name: Get version from git-tag
-        id: output-version
-        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
-
       - name: Package nuget package
         shell: bash
-        run: make nuget-pack configuration=Release output_path=${{ env.nuget_path }} version=${{ steps.output-version.outputs.version }}
+        run: make nuget-pack configuration=Release output_path=${{ env.nuget_path }} version=${GITHUB_REF#refs/tags/v}
 
       - name: Upload nuget artifact to GitHub
         uses: actions/upload-artifact@v3
