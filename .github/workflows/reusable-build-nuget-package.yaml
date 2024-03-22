@@ -1,0 +1,35 @@
+name: Build nuget package
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: 'The version of the package'
+        required: true
+        type: string
+      configuration:
+        description: 'The build configuration'
+        required: true
+        type: string
+
+jobs:
+  publish-nuget-package:
+    name: Build and publish nuget package
+    runs-on: ubuntu-22.04
+    env:
+      project: src/ProjectOrigin.HierarchicalDeterministicKeys
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET Core SDK from global.json
+        uses: actions/setup-dotnet@v3
+
+      - name: Package nuget package
+        shell: bash
+        run: dotnet pack --output build --configuration ${{ inputs.configuration }} -p:Version=${{ inputs.version }} ${{ env.project }}
+
+      - name: Upload nuget artifact
+        uses: actions/upload-artifact@v3
+        with:
+          retention-days: 1
+          path: build/*.nupkg
