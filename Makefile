@@ -1,5 +1,4 @@
 src_path := src
-configuration := Debug
 
 docfx_config := doc/docfx.json
 docfx_site_dir := doc/_site
@@ -21,7 +20,7 @@ help:
 	@printf "\n"
 
 ## Verify code is ready for commit to branch, runs tests and verifies formatting.
-verify: build test lint
+verify: test lint
 	@echo "Code is ready to commit."
 
 ## Prints dotnet info
@@ -41,53 +40,20 @@ clean:
 
 ## Restores all dotnet projects
 restore:
-	dotnet tool restore --tool-manifest src/.config/dotnet-tools.json
 	dotnet restore $(src_path)
 
 ## Builds all the code
-build: restore
-	echo "build for $(configuration)"
-	dotnet build $(src_path) --no-restore --configuration $(configuration)
+build: build-rust restore
+	dotnet build --no-restore $(src_path)
 
 ## Formats files using dotnet format
 format:
 	dotnet format $(src_path)
 
-## Run all tests except Concordium integration
-test:
-	dotnet test $(src_path)  --filter 'FullyQualifiedName!~ConcordiumIntegrationTests&FullyQualifiedName!~PerformanceTests'
+## Run all tests
+test: build
+	dotnet test --no-build $(src_path)
 
-## Run all Unit-tests
-unit-test:
-	dotnet test $(src_path) --filter 'FullyQualifiedName!~IntegrationTests'
-
-## Builds the local container, creates kind cluster and installs chart, and verifies it works
-verify-chart: restore
-	@kind version >/dev/null 2>&1 || { echo >&2 "kind not installed! kind is required to use recipe, please install or use devcontainer"; exit 1;}
-	@helm version >/dev/null 2>&1 || { echo >&2 "helm not installed! helm is required to use recipe, please install or use devcontainer"; exit 1;}
-	charts/project-origin-registry/run_kind_test.sh
-
-## Generate docfx site and serve, navigate to 127.0.0.1:8080
-doc-serve: build
-	docfx build doc/docfx.json
-	docfx serve doc/_site -n 127.0.0.1
-
-## Run Concordium integration tests, requires access to running node and environment variables
-concordium-tests:
-	dotnet test $(src_path)/ProjectOrigin.VerifiableEventStore.ConcordiumIntegrationTests
-
-## Run performance tests, takes a long time.
-verify-performance:
-	dotnet test $(src_path)  --filter 'FullyQualifiedName~PerformanceTests'
-
-## Package the nuget package
-nuget-pack: build
-  ifndef version
-	@echo "${formatting_error}Please set the version number. Example: make pack-release version=1.0.0${formatting_none}"
-	@exit 2
-  endif
-  ifndef output_path
-	dotnet pack --configuration $(configuration) --no-build -p:Version=$(version) $(src_path)
-  else
-	dotnet pack --configuration $(configuration) --no-build --output $(output_path) -p:Version=$(version) $(src_path)
-  endif
+## Tests run with the sonarcloud analyser
+sonarcloud-test:
+	dotnet test --no-build $(src_path)

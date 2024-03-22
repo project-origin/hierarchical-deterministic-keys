@@ -9,27 +9,18 @@ env:
   path: src/ProjectOrigin.HierarchicalDeterministicKeys
 
 jobs:
+  define-version:
+    uses: project-origin/.github/.github/workflows/reusable-tag-version.yaml@main
+
+  build-nuget-package:
+    needs:
+      - define-version
+    uses: ./.github/workflows/reusable-build-nuget-package.yaml
+    with:
+      version: ${{ needs.define-version.outputs.version }}
+      configuration: Release
+
   publish-nuget-package:
-    name: Build and publish nuget package
-    runs-on: ubuntu-22.04
-    env:
-      nuget_path: nuget-packages
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup .NET Core SDK from global.json
-        uses: actions/setup-dotnet@v3
-
-      - name: Package nuget package
-        shell: bash
-        run: make nuget-pack configuration=Release output_path=${{ env.nuget_path }} version=${GITHUB_REF#refs/tags/v}
-
-      - name: Upload nuget artifact to GitHub
-        uses: actions/upload-artifact@v3
-        with:
-          retention-days: 1
-          path: ${{ env.nuget_path }}/*.nupkg
-
-      - name: Publish
-        shell: bash
-        run: dotnet nuget push ${{ env.nuget_path }}/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+    needs:
+      - build-nuget-package
+    uses: project-origin/.github/.github/workflows/reusable-publish-nuget-artifacts.yaml@main

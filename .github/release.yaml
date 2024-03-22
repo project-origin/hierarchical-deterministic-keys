@@ -15,9 +15,9 @@ changelog:
     - title: Documentation
       labels:
         - documentation
-    - title: Chores and Refactoring
+    - title: Dependency Updates
       labels:
-        - chore
+        - dependencies
     - title: Other Changes
       labels:
         - "*"
