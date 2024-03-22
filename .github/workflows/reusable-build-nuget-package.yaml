@@ -17,7 +17,7 @@ jobs:
     name: Build and publish nuget package
     runs-on: ubuntu-22.04
     env:
-      project: src/ProjectOrigin.PedersenCommitment
+      project: src/ProjectOrigin.HierarchicalDeterministicKeys
     steps:
       - uses: actions/checkout@v3
 
