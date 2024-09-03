@@ -10,7 +10,7 @@ env:
 
 jobs:
   define-version:
-    uses: project-origin/.github/.github/workflows/reusable-tag-version.yaml@ec3646201b295b0aa27c957655d126d0c0eac04c
+    uses: project-origin/.github/.github/workflows/reusable-tag-version.yaml@b1a1034591b6f491085a0d9d259ae3b486487701
 
   build-nuget-package:
     needs:
@@ -24,7 +24,7 @@ jobs:
   publish-nuget-package:
     needs:
       - build-nuget-package
-    uses: project-origin/.github/.github/workflows/reusable-publish-nuget-artifacts.yaml@ec3646201b295b0aa27c957655d126d0c0eac04c
+    uses: project-origin/.github/.github/workflows/reusable-publish-nuget-artifacts.yaml@b1a1034591b6f491085a0d9d259ae3b486487701
     with:
       nuget_artifact: nuget-packages
     secrets:
