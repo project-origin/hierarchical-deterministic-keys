@@ -24,21 +24,21 @@ jobs:
           lastest_release_tag=$(gh release list --exclude-pre-releases --exclude-drafts --limit 10 --json tagName,isLatest \
             | jq -r '[.[] | select(.isLatest == true)][0] | .tagName')
           echo "Latest release tag: ${lastest_release_tag}"
-          echo "::set-output name=tag_name::${lastest_release_tag}"
+          echo "tag_name=${lastest_release_tag}" >> $GITHUB_STATE
 
           count=$(git rev-list ${lastest_release_tag}..HEAD --count)
           users=$(git log ${lastest_release_tag}..HEAD --format="%an" | sort | uniq)
 
           if [ "$users" = "$USER" ]; then
             echo "Only ${{ env.BOT_USER }} has created ${count} commits."
-            echo "::set-output name=proceed::true"
+            echo "proceed=true" >> $GITHUB_STATE
           else
             echo "Other users have committed."
-            echo "::set-output name=proceed::false"
+            echo "proceed=false" >> $GITHUB_STATE
           fi
 
       - name: Create release
-        if: steps.should_create_release.outputs.proceed == 'true'
+      #  if: steps.should_create_release.outputs.proceed == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           previous_tag: ${{ steps.should_create_release.outputs.tag_name }}
