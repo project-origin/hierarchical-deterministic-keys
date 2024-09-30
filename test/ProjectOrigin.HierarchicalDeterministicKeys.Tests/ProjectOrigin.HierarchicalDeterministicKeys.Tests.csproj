@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProjectOrigin.HierarchicalDeterministicKeys\ProjectOrigin.HierarchicalDeterministicKeys.csproj" />
+    <ProjectReference Include="..\..\src\ProjectOrigin.HierarchicalDeterministicKeys\ProjectOrigin.HierarchicalDeterministicKeys.csproj" />
   </ItemGroup>
 
 </Project>
