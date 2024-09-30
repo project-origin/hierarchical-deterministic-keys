@@ -1,7 +1,7 @@
 name: Build release artifacts
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}
   release:
     types: [published]
 
@@ -16,11 +16,12 @@ jobs:
   build-nuget-package:
     needs:
       - define-version
-    uses: ./.github/workflows/reusable-build-nuget-package.yaml
+    uses: project-origin/.github/.github/workflows/reusable-build-nuget-package.yaml@4ac2d493af43f34cdf6c93491120e9defbd532ce
     with:
       version: ${{ needs.define-version.outputs.version }}
       configuration: Release
       nuget_artifact: nuget-packages
+      project: .
 
   publish-nuget-package:
     needs:

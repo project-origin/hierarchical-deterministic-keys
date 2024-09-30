@@ -1,7 +1,9 @@
 name: Auto Release on Renovate
 
 on:
-  push: {}
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 12 * * 1-5'
 
 env:
   BOT_USER: projectorigin-renovate[bot]
@@ -39,7 +41,7 @@ jobs:
           fi
 
       - name: Create release
-      #  if: steps.should_create_release.outputs.proceed == 'true'
+        if: steps.should_create_release.outputs.proceed == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           previous_tag: ${{ steps.should_create_release.outputs.tag_name }}

@@ -16,7 +16,9 @@ jobs:
     uses: project-origin/.github/.github/workflows/reusable-verify-renovate.yaml@b1a1034591b6f491085a0d9d259ae3b486487701
 
   verify-build-nuget:
-    uses: ./.github/workflows/reusable-build-nuget-package.yaml
+    uses: project-origin/.github/.github/workflows/reusable-build-nuget-package.yaml@4ac2d493af43f34cdf6c93491120e9defbd532ce
     with:
       version: 0.0.1
       configuration: Release
+      nuget_artifact: nuget-packages
+      project: .
