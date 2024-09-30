@@ -19,22 +19,23 @@ jobs:
         id: should_create_release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
         run: |
           # Get the latest release excluding pre-releases
           lastest_release_tag=$(gh release list --exclude-pre-releases --exclude-drafts --limit 10 --json tagName,isLatest \
             | jq -r '[.[] | select(.isLatest == true)][0] | .tagName')
           echo "Latest release tag: ${lastest_release_tag}"
-          echo "tag_name=${lastest_release_tag}" >> $GITHUB_STATE
+          echo "tag_name=${lastest_release_tag}" >> $GITHUB_OUTPUT
 
           count=$(git rev-list ${lastest_release_tag}..HEAD --count)
           users=$(git log ${lastest_release_tag}..HEAD --format="%an" | sort | uniq)
 
           if [ "$users" = "$USER" ]; then
             echo "Only ${{ env.BOT_USER }} has created ${count} commits."
-            echo "proceed=true" >> $GITHUB_STATE
+            echo "proceed=true" >> $GITHUB_OUTPUT
           else
             echo "Other users have committed."
-            echo "proceed=false" >> $GITHUB_STATE
+            echo "proceed=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Create release
