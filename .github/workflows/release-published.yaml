@@ -1,9 +1,9 @@
 name: Build release artifacts
 
 on:
+  workflow_dispatch:
   release:
     types: [published]
-  workflow_dispatch:
 
 env:
   configuration: Release
