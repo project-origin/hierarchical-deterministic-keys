@@ -54,3 +54,4 @@ jobs:
           echo "New version: $new_version"
 
           gh release create $new_version --generate-notes --notes-start-tag ${previous_tag} --latest
+          gh workflow run "uild release artifacts" --ref "refs/tags/${new_version}"
