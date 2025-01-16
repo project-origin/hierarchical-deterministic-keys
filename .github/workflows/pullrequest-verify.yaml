@@ -7,16 +7,16 @@ on:
 
 jobs:
   verify-devcontainer:
-    uses: project-origin/.github/.github/workflows/reusable-verify-devcontainer.yaml@8510f42cfa53303e6be089c18157471a43137bcf
+    uses: project-origin/.github/.github/workflows/reusable-verify-devcontainer.yaml@6301104bea81c9a66ad51f6b2dfd72503f6fcbe1
 
   verify-code:
-    uses: project-origin/.github/.github/workflows/reusable-verify-code.yaml@8510f42cfa53303e6be089c18157471a43137bcf
+    uses: project-origin/.github/.github/workflows/reusable-verify-code.yaml@6301104bea81c9a66ad51f6b2dfd72503f6fcbe1
 
   verify-renovate:
-    uses: project-origin/.github/.github/workflows/reusable-verify-renovate.yaml@8510f42cfa53303e6be089c18157471a43137bcf
+    uses: project-origin/.github/.github/workflows/reusable-verify-renovate.yaml@6301104bea81c9a66ad51f6b2dfd72503f6fcbe1
 
   verify-build-nuget:
-    uses: project-origin/.github/.github/workflows/reusable-build-nuget-package.yaml@8510f42cfa53303e6be089c18157471a43137bcf
+    uses: project-origin/.github/.github/workflows/reusable-build-nuget-package.yaml@6301104bea81c9a66ad51f6b2dfd72503f6fcbe1
     with:
       version: 0.0.1
       configuration: Release
