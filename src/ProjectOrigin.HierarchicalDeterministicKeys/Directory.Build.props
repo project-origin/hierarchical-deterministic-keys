@@ -2,8 +2,8 @@
   <!-- Adds inheritance -->
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
   <PropertyGroup>
-    <!-- it is required to seet the TargetFramework to nothing to allow to set TargetFrameworks -->
+    <!-- it is required to set the TargetFramework to nothing to allow to set TargetFrameworks -->
     <TargetFramework />
-    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
   </PropertyGroup>
 </Project>
