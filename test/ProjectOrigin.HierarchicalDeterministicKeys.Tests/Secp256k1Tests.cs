@@ -1,10 +1,9 @@
 using System.Text;
 using AutoFixture;
 using FluentAssertions;
-using ProjectOrigin.HierarchicalDeterministicKeys;
 using Xunit;
 
-namespace ProjectOrigin.Electricity.Tests;
+namespace ProjectOrigin.HierarchicalDeterministicKeys.Tests;
 
 public class Secp256k1Tests
 {
